@@ -2,18 +2,30 @@ import time
 import pyautogui
 
 timesClicked = 0
-buttonCoordinates = False
+
+buttonsToFind = [
+    'button.png'
+]
 
 while 1:
 
-    try:
-        buttonCoordinates = pyautogui.locateOnScreen('button.png', True)
-    except:
-        pass
+    for button in buttonsToFind:
+        
+        buttonCoordinates = False
+        print('searching for ' + str(button));
 
-    if (buttonCoordinates):
-            pyautogui.click('button.png')
+        try:
+            buttonCoordinates = pyautogui.locateOnScreen(button)
+        except:
+            pass
+
+        if (buttonCoordinates):
+            
+            x, y= pyautogui.locateCenterOnScreen(button)
+            pyautogui.moveTo(x, y, duration = 0.1)
+            pyautogui.leftClick()
+
             timesClicked = timesClicked + 1
-            print("Click! " + str(timesClicked))
+            print('Clicking ' + str(button) + ' (' +  str(timesClicked) + ' clicks)')
 
-    time.sleep(15)
+    time.sleep(3)
